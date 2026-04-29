@@ -1,58 +1,54 @@
 @import url("shared.css");
 
-main {
-    height: 100%;
+.error-page {
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #fff0f5, #fff8dc);
 }
 
-.error-container {
+.error-card {
+    background: white;
+    padding: 2em;
+    border-radius: 20px;
     text-align: center;
-    width: 35em;
-    padding: 2em 5em;
-    border-radius: 10px;
-    background-color: var(--whitesh-yellow);
-    box-shadow: 10px 20px 30px 10px hsla(317, 22%, 42%, 0.1);
-    border: var(--dashed-pink-border);
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-.error-container img {
-    width: 150px;
-    margin-bottom: 20px;
+.error-mascot {
+    width: 20em;
+    margin-bottom: 3em;
 }
 
-.error-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #ff6f61;
-    margin-bottom: 10px;
+.error-message {
+    color: var(--grey);
+    margin-bottom: 2em;
 }
 
-.error-details {
-    margin: 20px auto;
-    font-size: 1.2rem;
-    color: #333;
+.actions {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-bottom: 2em;
 }
 
-.action-button {
-    display: inline-block;
-    background-color: #ffbf47;
+.btn-primary {
+    background: var(--saturated-pink);
     color: white;
-    font-size: 16px;
-    text-decoration: none;
-    padding: 10px 20px;
+    padding: 0.7em 2em;
     border-radius: 10px;
-    transition: background-color 0.3s ease;
+    transition: 0.2s;
+
+    &:hover {
+        background-color: var(--pink);
+        transform: scale(1.05);
+    }
 }
 
-.action-button:hover {
-    background-color: #ff6f61;
-}
-
-.error-container small {
-    display: block;
-    margin-top: 10px;
-    color: #777;
+.btn-secondary {
+    color: var(--pink);
+    border: var(--solid-pink-border);
 }

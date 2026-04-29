@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="initial-scale=1, maximum-scale=1" name="viewport">
+    <link rel="shortcut icon" th:href="@{/icons/kotoba.jpeg}">
+    <link rel="stylesheet" th:href="@{/styles/error.css}">
+    <title>Something went wrong</title>
+</head>
+<body>
+
+<main class="error-page">
+    <div class="error-card">
+
+        <img alt="confused mascot" class="error-mascot" th:src="@{/images/pages/internal-error.png}">
+
+        <h1>Oops… something went wrong</h1>
+
+        <p class="error-message">
+            We encountered an unexpected issue. Please try again.
+        </p>
+
+        <div class="actions">
+            <a class="btn-primary" href="/">Go Home</a>
+            <button class="btn-secondary" onclick="history.back()">⬅ Go Back</button>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>

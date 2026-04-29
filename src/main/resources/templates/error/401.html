@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" th:href="@{/styles/error.css}">
+    <title>Access Denied</title>
+</head>
+<body>
+
+<main class="error-page">
+
+    <div class="error-card">
+
+        <img alt="locked mascot" class="error-mascot" th:src="@{/images/pages/unauthorized.png}">
+
+        <h1>Access Denied</h1>
+
+        <p class="error-message" th:switch="${reason}">
+
+            <span th:case="'underlevel'">
+                Your level is too low to access this content.
+            </span>
+
+            <span th:case="'premiumRequired'">
+                This feature is available for premium users only.
+            </span>
+
+            <span th:case="'restricted'">
+                This content is restricted.
+            </span>
+
+            <span th:case="'banned'">
+                Your account is restricted from accessing this feature.
+            </span>
+
+            <span th:case="*">
+                You are not allowed to access this page.
+            </span>
+
+        </p>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+            <a class="btn-primary" href="/"
+               th:if="${reason != 'premiumRequired'}">
+                Home
+            </a>
+            <a class="btn-primary" href="/premium"
+               th:if="${reason == 'premiumRequired'}">
+                Upgrade
+            </a>
+            <button class="btn-secondary" onclick="history.go(-2)">⬅ Go Back</button>
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>
