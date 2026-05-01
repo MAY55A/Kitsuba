@@ -20,6 +20,7 @@ section {
     gap: 2em;
     background-color: transparent;
     border: none;
+    margin: 2em;
 }
 
 .sub-container {
@@ -28,6 +29,7 @@ section {
     background-color: var(--whitesh-yellow);
     border: var(--dashed-pink-border);
     border-radius: 10px;
+    box-shadow: 0 5px 10px 0 hsla(0, 0%, 0%, 0.2);
 
     a {
         display: inline-flex;
@@ -57,6 +59,7 @@ section {
     button {
         background-color: var(--yellow);
         color: var(--pink);
+        border: var(--solid-pink-border);
         height: 2.5em;
 
         &:not(.disabled):hover {
@@ -92,6 +95,7 @@ section {
         padding: 1em;
         border: var(--dashed-pink-border);
         color: var(--grey);
+        transition: 0.2s;
 
         .lock {
             position: absolute;
@@ -144,8 +148,19 @@ section {
 #confirm-btn {
     background-color: var(--very-light-pink);
     color: var(--red);
+    border: var(--solid-pink-border);
 
     &:hover {
         background-color: var(--light-pink);
     }
+}
+
+#cancel-btn {
+    color: var(--pink);
+    border: var(--solid-pink-border);
+}
+
+.mascot {
+    width: 15em;
+    opacity: 0.9;
 }
