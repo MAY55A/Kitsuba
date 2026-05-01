@@ -1,5 +1,9 @@
 @import url("nav.css");
 
+.main-container {
+    box-shadow: 0 5px 10px 0 hsla(0, 0%, 0%, 0.2);
+}
+
 section {
     height: 100%;
     display: flex;
@@ -25,4 +29,9 @@ section {
     a:hover {
         text-decoration: underline;
     }
+}
+
+.mascot {
+    width: 8em;
+    opacity: 0.8;
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta content="initial-scale=1, maximum-scale=1" name="viewport">
     <link rel="shortcut icon" th:href="@{/icons/kotoba.jpeg}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/styles/favourites.css}">
@@ -10,12 +10,14 @@
 </head>
 <body>
 <header th:replace="fragments/navbar :: navbar(null)"></header>
-<script type="module" th:src="@{/scripts/pages/favouritesPage.js}"></script>
+<script th:src="@{/scripts/pages/favouritesPage.js}" type="module"></script>
 <main>
     <nav th:replace="fragments/sidebar :: sidebar(${currentPath})"></nav>
     <section>
         <h1>Favourites</h1>
         <h2 class="subtitle">Click the <span>&hearts;</span> icon on a kanji to save it here for later.</h2>
+        <img alt="mascot hugging a heart" class="mascot" src="/images/mascot/hugging.png">
+
         <div class="main-container container">
             <div id="loading">
                 <div>
@@ -23,11 +25,11 @@
                     <p>Loading, please wait...</p>
                 </div>
             </div>
-            <div id="empty-state" class="hidden">
+            <div class="hidden" id="empty-state">
                 <p>You haven’t added any kanji yet.</p>
                 <a href="/learn">Browse kanji</a>
             </div>
-            <div id="kanji-container" class="hidden">
+            <div class="hidden" id="kanji-container">
                 <div id="kanji-list"></div>
                 <div id="actions">
                 </div>
