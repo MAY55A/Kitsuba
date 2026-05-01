@@ -1,6 +1,7 @@
 import {fetchPracticeTest} from "../api/testApi.js";
 import {displayTest} from "../render/displayTest.js";
 import {MASCOT_MAP} from "../utils/maps.js";
+import {fetchLearningStats} from "../api/userApi.js";
 
 const type = document.getElementById("type").value;
 const questionsCount = Number(document.getElementById("questions-count").value);
@@ -34,10 +35,19 @@ function onShowResult(learningStats, result, testResultElem) {
     learningStats.xp += earnedXP;
 }
 
+async function checkIsUnderlevel(learningStats) {
+    if (grade && learningStats.currentGrade <= grade)
+        window.location.replace("/error/401?reason=underlevel");
+}
+
 function onExit() {
     window.location.href = "/practice";
 }
 
-fetchPracticeTest(type, questionsCount, grade).then((testData) => {
-    displayTest(testData, onShowResult, onExit, grade);
+fetchLearningStats().then(async (learningStats) => {
+    await checkIsUnderlevel(learningStats); // redirect to unauthorized page if underleveled
+
+    fetchPracticeTest(type, questionsCount, grade).then((testData) => {
+        displayTest(testData, learningStats, onShowResult, onExit);
+    });
 });

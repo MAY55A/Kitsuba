@@ -1,9 +1,9 @@
 import {audioIcon, bindAudioSymbols, playAudio} from "../utils/audio.js";
-import {fetchLearningStats, updateUserData} from "../api/userApi.js";
+import {updateUserData} from "../api/userApi.js";
 import {MASCOT_MAP} from "../utils/maps.js";
 
 
-export function displayTest(test, onShowResult, onExit, grade) {
+export async function displayTest(test, learningStats, onShowResult, onExit) {
     const progressBar = document.getElementById("progress-bar");
     const startBtn = document.getElementById("start-btn");
     const loading = document.getElementById('loading');
@@ -161,7 +161,6 @@ export function displayTest(test, onShowResult, onExit, grade) {
         loading.getElementsByTagName("p")[0].textContent = "Loading results, please wait...";
         loading.classList.remove("hidden");
 
-        let learningStats = await fetchLearningStats();
         learningStats.errors += errors;
         learningStats.correctAnswers += correctAnswers;
 

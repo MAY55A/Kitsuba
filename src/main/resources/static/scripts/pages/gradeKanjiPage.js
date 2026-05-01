@@ -52,11 +52,10 @@ async function displayButtons(data) {
     });
 }
 
-async function addXP(data) {
-    const learningStats = await fetchLearningStats();
+async function addXP(learningStats, kanjiGrade) {
     const isNewKanji =
-        learningStats.currentGrade === data.grade &&
-        learningStats.gradeProgress === id + Math.trunc(id / 10);
+        learningStats.currentGrade === kanjiGrade &&
+        learningStats.gradeProgress === id + Math.trunc(id / 10); // id + number of passed tests
 
     if (isNewKanji) {
         learningStats.xp += 5;
@@ -73,8 +72,21 @@ fetchKanjiData(kanji).then(async (data) => {
         id = data.id;
         nextUnit = data.nextUnit;
         previousUnit = data.previousUnit;
-    addXP(data.kanjiData);
-        displayKanjiData(data.kanjiData);
-        displayButtons(data.kanjiData);
+
+        if (kanjiData.grade != grade)
+            history.replaceState(null, "", `/learn/grades/${kanjiData.grade}/kanji?kanji=${kanji}`)
+
+        const learningStats = await fetchLearningStats();
+        const isUnderlevel = learningStats.currentGrade < kanjiData.grade ||
+            learningStats.gradeProgress < id + Math.trunc(id / 10);
+
+        if (isUnderlevel)
+            window.location.replace("/error/401?reason=underlevel");
+
+        else {
+            addXP(learningStats, kanjiData.grade);
+            displayKanjiData(kanjiData);
+            displayButtons(kanjiData);
+        }
     }
 );

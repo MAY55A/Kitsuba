@@ -3,7 +3,6 @@ import {fetchUserData} from "../api/userApi.js";
 
 function displayAllKanji(kanjiList, user) {
     document.getElementById('loading').classList.add("hidden");
-    console.log(user);
     const grade = Number(document.getElementById("grade").innerHTML);
     const progressBar = document.getElementById("progress-bar");
     const content = document.getElementById("kanji-list");
@@ -15,7 +14,7 @@ function displayAllKanji(kanjiList, user) {
     let currentGrade = Number(user.learningStats.currentGrade);
     // Display Kanji elements
     while (kanjiUnit < kanjiList.length) {
-        if(grade < currentGrade) {
+        if (grade < currentGrade) {
             status = "unlocked";
             kanjiLink = `href = "/learn/grades/${grade}/kanji/?kanji=${kanjiList[kanjiUnit]}"`;
         } else if (currentGrade === grade) {
@@ -34,8 +33,8 @@ function displayAllKanji(kanjiList, user) {
         totalUnits++
         if (kanjiUnit % 10 === 0) {
             totalUnits++;
-            if(status !== "locked")
-                kanjiLink = `href = "/learn/grades/${grade}/tests/${Math.trunc(kanjiUnit/10)}"`;
+            if (status !== "locked")
+                kanjiLink = `href = "/learn/grades/${grade}/tests/${Math.trunc(kanjiUnit / 10)}"`;
             content.insertAdjacentHTML('beforeend', `<span class="test ${status}"><a ${kanjiLink}>test</a></span>`);
         }
     }
@@ -47,4 +46,10 @@ function displayAllKanji(kanjiList, user) {
 }
 
 const grade = document.getElementById("grade").innerHTML;
-fetchKanjiList(grade).then((list) => fetchUserData().then((user) => displayAllKanji(list, user)));
+fetchUserData().then((user) => {
+    if (user.learningStats.currentGrade < grade) {
+        window.location.replace("/error/401?reason=underlevel");
+    } else {
+        fetchKanjiList(grade).then((list) => displayAllKanji(list, user));
+    }
+});

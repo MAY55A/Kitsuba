@@ -1,5 +1,7 @@
 import {fetchGradeTest} from "../api/testApi.js";
 import {displayTest} from "../render/displayTest.js";
+import {fetchKanjiCount} from "../api/kanjiApi.js";
+import {fetchLearningStats} from "../api/userApi.js";
 import {MASCOT_MAP} from "../utils/maps.js";
 
 const nbTest = document.getElementById("test").value;
@@ -72,10 +74,34 @@ async function onShowResult(learningStats, result, testResultElem) {
     }
 }
 
+async function checkIsUnderlevel(learningStats) {
+    let isUnderlevel;
+
+    if (learningStats.currentGrade > grade)
+        isUnderlevel = false;
+
+    else if (learningStats.currentGrade < grade)
+        isUnderlevel = true;
+
+    else if (nbTest === "final") {
+        const kanjiCount = await fetchKanjiCount(grade);
+        isUnderlevel = learningStats.gradeProgress < kanjiCount + Math.trunc(kanjiCount / 10);
+
+    } else
+        isUnderlevel = learningStats.gradeProgress < nbTest * 10;
+
+    if (isUnderlevel)
+        window.location.replace("/error/401?reason=underlevel");
+}
+
 function onExit() {
     window.location.href = `/learn/grades/${grade}`;
 }
 
-fetchGradeTest(nbTest, grade).then((testData) => {
-    displayTest(testData, onShowResult, onExit, grade);
+fetchLearningStats().then(async (learningStats) => {
+    await checkIsUnderlevel(learningStats); // redirect to unauthorized page if underleveled
+
+    fetchGradeTest(nbTest, grade).then((testData) => {
+        displayTest(testData, learningStats, onShowResult, onExit);
+    });
 });
