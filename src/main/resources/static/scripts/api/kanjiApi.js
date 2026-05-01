@@ -1,12 +1,26 @@
 export async function fetchKanjiList(grade) {
     try {
-        const response = await fetch(`/api/kanji?grade=${grade}`);
+        const response = await fetch(`/api/kanji/list?grade=${grade}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return await response.json();
     } catch (error) {
         console.error("Error fetching kanji list :", error);
+        window.location.replace("/error");
+    }
+}
+
+export async function fetchKanjiCount(grade) {
+    try {
+        const response = await fetch(`/api/kanji/count?grade=${grade}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return Number(await response.json());
+    } catch (error) {
+        console.error("Error fetching grade kanji count:", error);
+        window.location.replace("/error");
     }
 }
 
@@ -49,7 +63,7 @@ export async function fetchKanjiData(kanji) {
         return {id: id, nextUnit: nextUnit, previousUnit: previousUnit, kanjiData: result};
     } catch (error) {
         console.error("Error fetching kanji data :", error);
-        window.location.href = "/error";
+        window.location.replace("/error");
     }
 }
 
@@ -61,7 +75,7 @@ export async function searchKanji(word) {
         }
         let res = await response.json() // is always an array (can be empty)
 
-        return res[0] ; // return the first element/kanji (can be undefined)
+        return res[0]; // return the first element/kanji (can be undefined)
     } catch (error) {
         console.error("Error searching for kanji :", error);
         return null;
@@ -75,7 +89,7 @@ export async function fetchRandomKanji() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        return  await response.json();
+        return await response.json();
     } catch (error) {
         console.error("Error fetching random kanji :", error);
         return null;

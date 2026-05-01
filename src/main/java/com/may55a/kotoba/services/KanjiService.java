@@ -42,7 +42,7 @@ public class KanjiService {
     @Cacheable(value = "dailyWordCache", key = "T(java.time.LocalDate).now()")
     public String getRandomWord() {
 
-        String response =  webClient.get()
+        String response = webClient.get()
                 .uri("https://jlpt-vocab-api.vercel.app/api/words/random")
                 .retrieve()
                 .bodyToMono(String.class)
@@ -81,15 +81,16 @@ public class KanjiService {
 
     public String searchKanji(String query) {
 
-         String response =  webClient.get()
+        String response = webClient.get()
                 .uri("https://kanjialive-api.p.rapidapi.com/api/public/search/" + query)
                 .header("x-rapidapi-key", rapidApiKey)
                 .header("x-rapidapi-host", rapidApiHost)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-         return response;
+        return response;
     }
+
     public Map<String, String> parseRadicalDetails(JsonNode radical) {
         Map<String, String> radicalDetails = new HashMap<>();
 
@@ -103,6 +104,7 @@ public class KanjiService {
 
         return radicalDetails;
     }
+
     public Map<String, String> parseOnyomi(JsonNode root) {
         Map<String, String> onyomi = new HashMap<>();
 
@@ -111,6 +113,7 @@ public class KanjiService {
 
         return onyomi;
     }
+
     public Map<String, String> parseKunyomi(JsonNode root) {
         Map<String, String> kunyomi = new HashMap<>();
 
@@ -119,6 +122,7 @@ public class KanjiService {
 
         return kunyomi;
     }
+
     public List<Map<String, String>> parseExamples(JsonNode examples) {
         List<Map<String, String>> listExamples = new ArrayList<>();
         for (JsonNode ex : examples) {
@@ -132,8 +136,9 @@ public class KanjiService {
 
         return listExamples;
     }
+
     public String getKanji(String query) {
-        String response =  webClient.get()
+        String response = webClient.get()
                 .uri("https://kanjialive-api.p.rapidapi.com/api/public/kanji/" + query)
                 .header("x-rapidapi-key", rapidApiKey)
                 .header("x-rapidapi-host", rapidApiHost)
@@ -142,10 +147,11 @@ public class KanjiService {
                 .block();
         return response;
     }
+
     @Cacheable(value = "kanjiDetailsCache", key = "#query")
     public KanjiDetails getKanjiDetails(String query) {
 
-        String response =  webClient.get()
+        String response = webClient.get()
                 .uri("https://kanjialive-api.p.rapidapi.com/api/public/kanji/" + query)
                 .header("x-rapidapi-key", rapidApiKey)
                 .header("x-rapidapi-host", rapidApiHost)
@@ -178,7 +184,7 @@ public class KanjiService {
     @Cacheable(value = "gradeKanjiCache", key = "#grade")
     public List<String> getAllKanjiByGrade(String grade) {
 
-        String response =  webClient.get()
+        String response = webClient.get()
                 .uri("https://kanjiapi.dev/v1/kanji/grade-" + grade)
                 .retrieve()
                 .bodyToMono(String.class)
@@ -186,9 +192,14 @@ public class KanjiService {
         try {
             return objectMapper.readValue(response, List.class);
         } catch (IOException e) {
-                e.printStackTrace();
-                return new ArrayList<>();
+            e.printStackTrace();
+            return new ArrayList<>();
         }
+    }
+
+    @Cacheable(value = "gradeKanjiCountCache", key = "#grade")
+    public int getKanjiCountByGrade(String grade) {
+        return getAllKanjiByGrade(grade).size();
     }
 
     public String getNextKanji(String current, String grade) {
@@ -196,29 +207,30 @@ public class KanjiService {
         String next = null;
         int test = 0;
         int index = list.indexOf(current);
-        if (index != -1 ) {
+        if (index != -1) {
             if ((index + 1) % 10 == 0)
-                test = (index+1) / 10;
+                test = (index + 1) / 10;
             if (index < list.size() - 1)
                 next = list.get(index + 1);
         }
         return "{\"kanji\": \"" + next + "\", \"isTest\": " + test + " }";
     }
+
     public String getPreviousKanji(String current, String grade) {
         List<String> list = getAllKanjiByGrade(grade);
         String previous = null;
         int test = 0;
         int index = list.indexOf(current);
         if (index != -1 && index != 0) {
-            if ((index+1) % 10 == 1) {
-                test = (index+1) / 10;
+            if ((index + 1) % 10 == 1) {
+                test = (index + 1) / 10;
             }
             previous = list.get(index - 1);
         }
         return "{\"kanji\": \"" + previous + "\", \"isTest\": " + test + " }";
     }
 
-    private String getAudioForKanji(String kanji){
+    private String getAudioForKanji(String kanji) {
         String TTS_URL = "https://translate.google.com/translate_tts?ie=UTF-8&q=%s&tl=ja&client=tw-ob";
         String AUDIO_CACHE_DIR_ABS_PATH = "src/main/resources/static/cache/audio_cache/";
         String AUDIO_CACHE_DIR = "cache/audio_cache/";
