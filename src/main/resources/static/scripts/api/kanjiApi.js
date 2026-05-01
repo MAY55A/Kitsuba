@@ -7,24 +7,46 @@ export async function fetchKanjiList(grade) {
         return await response.json();
     } catch (error) {
         console.error("Error fetching kanji list :", error);
-        window.location.href = "/error";
     }
 }
 
-export async function fetchKanjiData(kanji) {
+
+export async function fetchKanjiId(kanji, grade) {
+    try {
+        const kanjiList = await fetchKanjiList(grade);
+        return kanjiList.indexOf(kanji);
+
+    } catch (error) {
+        console.error("Error fetching kanji ID:", error);
+        window.location.replace("/error");
+    }
+}
+
+export async function fetchKanjiDetails(kanji) {
     try {
         const response = await fetch(`/api/kanji/${kanji}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        let result = await response.json();
-        let nextResponse = await fetch(`/api/kanji/next?kanji=${kanji}&grade=${result.grade}`);
-        let previousResponse = await fetch(`/api/kanji/previous?kanji=${kanji}&grade=${result.grade}`);
-        let nextUnit = (await nextResponse.json());
-        let previousUnit = (await previousResponse.json());
 
-        return {nextUnit: nextUnit, previousUnit: previousUnit, kanjiData: result};
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching kanji details :", error);
+        window.location.replace("/error");
+    }
+}
+
+export async function fetchKanjiData(kanji) {
+    try {
+        const result = await fetchKanjiDetails();
+        const nextResponse = await fetch(`/api/kanji/next?kanji=${kanji}&grade=${result.grade}`);
+        const previousResponse = await fetch(`/api/kanji/previous?kanji=${kanji}&grade=${result.grade}`);
+        const nextUnit = (await nextResponse.json());
+        const previousUnit = (await previousResponse.json());
+        const id = await fetchKanjiId(kanji, result.grade);
+
+        return {id: id, nextUnit: nextUnit, previousUnit: previousUnit, kanjiData: result};
     } catch (error) {
         console.error("Error fetching kanji data :", error);
         window.location.href = "/error";

@@ -17,11 +17,11 @@ function displayAllKanji(kanjiList, user) {
     while (kanjiUnit < kanjiList.length) {
         if(grade < currentGrade) {
             status = "unlocked";
-            kanjiLink = `href = "/learn/grades/${grade}/kanji?id=${kanjiUnit}&kanji=${kanjiList[kanjiUnit]}"`;
+            kanjiLink = `href = "/learn/grades/${grade}/kanji/?kanji=${kanjiList[kanjiUnit]}"`;
         } else if (currentGrade === grade) {
             if (totalUnits <= progress) {
                 status = "unlocked";
-                kanjiLink = `href = "/learn/grades/${grade}/kanji?id=${kanjiUnit}&kanji=${kanjiList[kanjiUnit]}"`;
+                kanjiLink = `href = "/learn/grades/${grade}/kanji?kanji=${kanjiList[kanjiUnit]}"`;
                 if (totalUnits === progress)
                     status += " current";
             } else {

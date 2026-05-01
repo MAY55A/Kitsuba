@@ -25,7 +25,7 @@
             <span class="audio-symbol" id="kanji-audio" th:insert="fragments/icons/audio"></span>
             <span id="kanji" th:text="${kanji}"></span>
         </h1>
-        <input id="kanji-id" th:value="${id}" type="hidden">
+        <input id="grade" th:unless="${grade == null}" th:value="${grade}" type="hidden">
         <div id="meaning"></div>
         <div id="readings"></div>
         <span class="heart" id="heart">&hearts;</span>

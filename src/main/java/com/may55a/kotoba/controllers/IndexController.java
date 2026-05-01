@@ -46,9 +46,8 @@ public class IndexController {
     }
 
     @GetMapping("/learn/grades/{grade}/kanji")
-    public String learnKanji(@RequestParam String kanji, @RequestParam int id, @PathVariable String grade, Model model) {
+    public String learnKanji(@RequestParam String kanji, @PathVariable String grade, Model model) {
         model.addAttribute("kanji", kanji);
-        model.addAttribute("id", id);
         model.addAttribute("grade", grade);
         return "pages/Kanji";
     }

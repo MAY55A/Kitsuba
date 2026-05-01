@@ -5,10 +5,11 @@ import {displayKanjiData} from "../render/displayKanji.js";
 
 
 const kanji = document.getElementById("kanji").textContent;
-const id = Number(document.getElementById("kanji-id").value);
-let nextBtn = document.getElementById('next');
-let previousBtn = document.getElementById('previous');
+const grade = document.getElementById("grade").value;
+const nextBtn = document.getElementById('next');
+const previousBtn = document.getElementById('previous');
 
+let id;
 let nextUnit;
 let previousUnit;
 
@@ -67,6 +68,9 @@ async function addXP(data) {
 }
 
 fetchKanjiData(kanji).then(async (data) => {
+        const kanjiData = data.kanjiData;
+
+        id = data.id;
         nextUnit = data.nextUnit;
         previousUnit = data.previousUnit;
     addXP(data.kanjiData);
