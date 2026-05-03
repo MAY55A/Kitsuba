@@ -41,9 +41,9 @@ function displayPracticePage(data) {
         }
     }
 
-    if (data.learningStats.totalLearnedKanji < 7) {
+    if (data.learningStats.totalLearnedKanji < 10) {
         const btn = document.querySelector("#practice-all button");
-        btn.title = "You need to at least have 7 unlocked kanji";
+        btn.title = "You need to at least have 10 unlocked kanji";
         btn.classList.add("disabled");
         btn.disabled = true;
     }

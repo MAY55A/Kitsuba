@@ -12,7 +12,7 @@ export async function fetchGradeTest(nbTest, grade) {
         return await response.json();
     } catch (error) {
         console.error("Error fetching test :", error);
-        window.location.href = "/error";
+        window.location.replace("/error");
     }
 }
 
@@ -26,7 +26,7 @@ export async function fetchPracticeTest(type, nbQuestions, grade) {
         return await response.json();
     } catch (error) {
         console.error("Error fetching test :", error);
-        window.location.href = "/error";
+        window.location.replace("/error");
     }
 }
 
@@ -40,6 +40,6 @@ export async function fetchSkillQuiz(nbQuestions) {
         return await response.json();
     } catch (error) {
         console.error("Error fetching quiz :", error);
-        window.location.href = "/error";
+        window.location.replace("/error");
     }
 }

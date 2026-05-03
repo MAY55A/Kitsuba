@@ -39,23 +39,29 @@ public class QuizService {
     }
 
     public Quiz getPracticeTest(String type, int nbQuestions, String grade) {
-        switch (type) {
-            case "grade" -> {
-                return getEntireGradeTest(grade, nbQuestions);
-            }
-            case "favourites" -> {
-                List<String> list = userService.getFavourites();
-                return generateTest(list, nbQuestions, 0);
-            }
-            case "all" -> {
-                LearningStats stats = userService.getLearningStats();
-                int currentGrade = stats.getCurrentGrade();
-                List<String> list = new ArrayList<>();
-                for (int i = 1; i < currentGrade; i++) {
-                    list.addAll(getListKanji(String.valueOf(i), 0, -1));
+        List<Integer> questionsCounts = Arrays.asList(10, 20, 30, 40);
+        if (questionsCounts.contains(nbQuestions)) {
+            switch (type) {
+
+                case "grade" -> {
+                    return getEntireGradeTest(grade, nbQuestions);
                 }
-                list.addAll(getListKanji(String.valueOf(currentGrade), 0, stats.getGradeProgress()));
-                return generateTest(list, nbQuestions, 0);
+                case "favourites" -> {
+                    List<String> list = userService.getFavourites();
+                    if (list.size() >= 7) // return null if number of favourites is less than 7
+                        return generateTest(list, nbQuestions, 0);
+                }
+                case "all" -> {
+                    LearningStats stats = userService.getLearningStats();
+                    int currentGrade = stats.getCurrentGrade();
+                    List<String> list = new ArrayList<>();
+                    for (int i = 1; i < currentGrade; i++) {
+                        list.addAll(getListKanji(String.valueOf(i), 0, -1));
+                    }
+                    list.addAll(getListKanji(String.valueOf(currentGrade), 0, stats.getTotalLearnedKanji() - list.size()));
+                    if (list.size() >= 10) // return null if number of unlocked kanji is less than 10
+                        return generateTest(list, nbQuestions, 0);
+                }
             }
         }
         return null;
@@ -169,6 +175,9 @@ public class QuizService {
     }
 
     public Quiz generateSkillQuiz(int nbQuestions) {
+        List<Integer> questionsCounts = Arrays.asList(20, 40, 60, 80);
+        if (!questionsCounts.contains(nbQuestions))
+            return null;
         int maxScore = 0;
         Quiz quiz = new Quiz();
         List<Question> questions = new ArrayList<>();
