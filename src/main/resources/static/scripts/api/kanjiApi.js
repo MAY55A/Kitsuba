@@ -53,7 +53,7 @@ export async function fetchKanjiDetails(kanji) {
 
 export async function fetchKanjiData(kanji) {
     try {
-        const result = await fetchKanjiDetails();
+        const result = await fetchKanjiDetails(kanji);
         const nextResponse = await fetch(`/api/kanji/next?kanji=${kanji}&grade=${result.grade}`);
         const previousResponse = await fetch(`/api/kanji/previous?kanji=${kanji}&grade=${result.grade}`);
         const nextUnit = (await nextResponse.json());

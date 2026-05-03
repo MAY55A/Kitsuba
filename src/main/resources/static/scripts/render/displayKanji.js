@@ -1,9 +1,13 @@
 import {fetchFavourites, updateUserData} from "../api/userApi.js";
 import {audioIcon, bindAudioSymbols} from "../utils/audio.js";
 
-export async function displayKanjiData(data) {
+export async function displayKanjiData(data, isFavourite) {
     const heart = document.getElementById("heart");
-    let favourites;
+    const favourites = await fetchFavourites();
+    if (isFavourite && !favourites.includes(data.kanji)) {
+        window.location.replace("/error/404");
+        return;
+    }
 
     document.getElementById('loading').classList.add("hidden");
     let examples = "";
@@ -22,7 +26,6 @@ export async function displayKanjiData(data) {
     bindAudioSymbols(); // enables playing audio when clicking on any audio-symbol inside the current DOM
 
     // check if the kanji is a favourite or not
-    favourites = await fetchFavourites();
     if (favourites.includes(data.kanji)) {
         heart.classList.add("active");
     }
