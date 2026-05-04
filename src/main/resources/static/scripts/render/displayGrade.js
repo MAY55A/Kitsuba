@@ -39,7 +39,7 @@ function displayAllKanji(kanjiList, user) {
         }
     }
     content.insertAdjacentHTML('beforeend', `<span class="final-test ${status}">final test</span>`);
-    let progressRate = currentGrade === grade ? progress/totalUnits*100 : currentGrade < grade ? 0 : 100;
+    let progressRate = currentGrade === grade ? Math.round(progress / totalUnits * 100) : currentGrade < grade ? 0 : 100;
     progressBar.setAttribute("aria-valuenow", progressRate);
     progressBar.setAttribute("title", `${progressRate}%`);
     progressBar.setAttribute("style", `width: ${progressRate}%;`);
