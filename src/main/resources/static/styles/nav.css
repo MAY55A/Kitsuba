@@ -11,7 +11,7 @@ main {
     align-items: center;
     justify-content: space-between;
     gap: 0.5em 2em;
-    padding: 1em;
+    padding: 0.5em 1em;
     height: 5.5em;
     width: 100%;
     font-family: var(--title-font);
@@ -48,21 +48,8 @@ main {
 }
 
 /* Logo */
-.logo {
-    color: var(--saturated-pink);
-    font-family: var(--title-font);
-    text-align: center;
-
-    .kanji {
-        display: block;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-
-    .brand {
-        font-size: 18px;
-        font-weight: 600;
-    }
+.logo img {
+    height: 4em;
 }
 
 /* Nav */
