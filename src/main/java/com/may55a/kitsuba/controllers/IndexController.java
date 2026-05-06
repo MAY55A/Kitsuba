@@ -110,4 +110,9 @@ public class IndexController {
         model.addAttribute("questions", questions);
         return "pages/Quiz";
     }
+
+    @GetMapping("/about")
+    public String about() {
+        return "pages/About";
+    }
 }

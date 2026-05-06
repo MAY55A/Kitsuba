@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="initial-scale=1, maximum-scale=1" name="viewport">
+    <link rel="shortcut icon" th:href="@{/icons/kitsuba.png}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles/about.css}">
+    <title>KITSUBA | About</title>
+</head>
+<body>
+<header th:replace="fragments/navbar :: navbar(null)"></header>
+<main class="about-container">
+
+    <section class="about-header">
+        <h1>About Kitsuba</h1>
+        <p class="subtitle">A small project to make learning kanji more fun</p>
+        <img alt="Kitsuba mascot" class="mascot" src="/images/pages/about.png">
+    </section>
+
+    <section class="about-section">
+        <h2>🌱 The Idea</h2>
+        <p>
+            <strong>Kitsuba</strong> is a passion project built by a solo developer who is also learning Japanese.
+            It started as a simple way to make kanji practice more engaging and less repetitive.
+        </p>
+        <p>
+            Instead of feeling like a chore, the goal is to turn learning into something more visual, interactive,
+            and enjoyable — even in small daily sessions.
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h2>🧑‍💻 Development</h2>
+        <p>
+            This website is not backed by a large team or company. It is developed and maintained by one person,
+            which means things may not always be perfect — and that’s okay.
+        </p>
+        <p>
+            Kitsuba is constantly evolving, and improvements are made over time based on feedback and experimentation.
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h2>📡 Data & Accuracy</h2>
+        <p>
+            The kanji data used on Kitsuba comes from external APIs. The platform does not currently maintain its own
+            database, though this may change in the future as the project grows.
+        </p>
+        <p>
+            While care is taken to provide useful and consistent information, some data may be incomplete or vary
+            depending
+            on the source.
+        </p>
+    </section>
+
+    <section class="about-section warning">
+        <h2>⚠️ Important Note</h2>
+        <p>
+            Kitsuba should <strong>not</strong> be your only resource for learning Japanese.
+        </p>
+        <p>
+            It focuses mainly on kanji practice, which is only one part of the language. To learn effectively,
+            you should also use other resources for:
+        </p>
+        <ul>
+            <li>Grammar</li>
+            <li>Vocabulary</li>
+            <li>Listening and speaking</li>
+            <li>Reading real-world content</li>
+        </ul>
+        <p>
+            Think of Kitsuba as a <strong>fun companion tool</strong>, not a complete learning solution.
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h2>🛠️ Support</h2>
+        <p>
+            If you encounter bugs or issues while using Kitsuba, please report them.
+            Since this is a solo project, your help is essential to improve the platform.
+        </p>
+    </section>
+
+    <section class="about-section contact">
+        <div>
+            <h2>📬 Contact</h2>
+            <p>
+                For feedback, suggestions, or questions, feel free to reach out:
+            </p>
+            <ul>
+                <li>Email: <a href="mailto:contact@kitsuba.app">contact@kitsuba.app</a></li>
+                <li>Support: <a href="mailto:support@kitsuba.app">support@kitsuba.app</a></li>
+            </ul>
+        </div>
+        <img alt="mascot holding letter" src="/images/pages/contact.png"/>
+    </section>
+
+    <section class="about-footer">
+        <p>Thanks for using Kitsuba 🌸</p>
+    </section>
+
+</main>
+<footer th:replace="fragments/footer"></footer>
+<script src="/scripts/pages/publicPage.js" type="module"></script>
+</body>
+</html>
