@@ -115,4 +115,14 @@ public class IndexController {
     public String about() {
         return "pages/About";
     }
+
+    @GetMapping("/privacy")
+    public String privacy() {
+        return "pages/Privacy";
+    }
+
+    @GetMapping("/terms")
+    public String terms() {
+        return "pages/Terms";
+    }
 }

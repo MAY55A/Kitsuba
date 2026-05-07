@@ -10,13 +10,13 @@
 </head>
 <body>
 <header th:replace="fragments/navbar :: navbar(null)"></header>
-<main class="about-container">
+<main>
 
-    <section class="about-header">
+    <div class="about-header">
         <h1>About Kitsuba</h1>
         <p class="subtitle">A small project to make learning kanji more fun</p>
         <img alt="Kitsuba mascot" class="mascot" src="/images/pages/about.png">
-    </section>
+    </div>
 
     <section class="about-section">
         <h2>🌱 The Idea</h2>
@@ -96,9 +96,9 @@
         <img alt="mascot holding letter" src="/images/pages/contact.png"/>
     </section>
 
-    <section class="about-footer">
+    <div class="about-footer">
         <p>Thanks for using Kitsuba 🌸</p>
-    </section>
+    </div>
 
 </main>
 <footer th:replace="fragments/footer"></footer>

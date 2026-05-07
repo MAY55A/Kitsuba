@@ -33,7 +33,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("https://jisho.org/search/**", "/scripts/**", "/styles/**", "/images/**", "/icons/**", "/oauth2/**").permitAll()
-                        .requestMatchers("/", "/api/**", "/signup", "/about", "/error/**", "/kanji/**").permitAll() // Allow public access
+                        .requestMatchers("/", "/api/**", "/signup", "/about", "/privacy", "/terms", "/error/**", "/kanji/**").permitAll() // Allow public access
                         .anyRequest().authenticated() // Protect other routes
                 )
                 .oauth2Login(oauth2 -> oauth2

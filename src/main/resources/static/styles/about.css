@@ -1,6 +1,6 @@
 @import url("nav.css");
 
-.about-container {
+main {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -9,7 +9,10 @@
 
 .about-header {
     text-align: center;
-    margin-bottom: 2em;
+}
+
+h1 {
+    text-align: center;
 }
 
 .mascot {
@@ -21,41 +24,53 @@
     color: var(--grey);
 }
 
-.about-section {
+section {
     margin-bottom: 2em;
     padding: 1.5em;
-    background: var(--whitesh-pink);
+    background: linear-gradient(135deg, rgb(255 240 245 / 0.8), rgb(255 231 220 / 0.7));
     border-radius: 16px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
-}
 
-.about-section h2 {
-    margin-bottom: 0.5em;
-}
+    h2 {
+        margin-bottom: 0.5em;
+    }
 
-.about-section.warning {
-    border-left: 4px solid var(--saturated-yellow);
-    background: var(--very-light-yellow);
-}
+    ul {
+        margin: 0.5em 0 0 1em;
+        list-style: inside;
+    }
 
-.about-section.contact {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    img {
-        width: 10em;
-        margin: auto;
+    a:hover {
+        text-decoration: underline;
     }
 }
 
-.about-section ul {
-    margin: 0.5em 0 0 1em;
-    list-style: inside;
+.about-section {
+    &.warning {
+        border-left: 4px solid var(--saturated-yellow);
+        background: var(--very-light-yellow);
+    }
+
+    &.contact {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        img {
+            width: 10em;
+            margin: auto;
+        }
+    }
 }
 
 .about-footer {
     text-align: center;
     margin-top: 2em;
     color: var(--grey);
+}
+
+.last-updated {
+    text-align: center;
+    color: var(--grey);
+    margin-bottom: 2em;
 }
