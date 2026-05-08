@@ -56,7 +56,7 @@ public class IndexController {
     public String test(@PathVariable String grade, @PathVariable String test, Model model) {
         model.addAttribute("grade", grade);
         model.addAttribute("test", test);
-        return "pages/Test";
+        return "pages/GradeTest";
     }
 
     @GetMapping("/practice")
