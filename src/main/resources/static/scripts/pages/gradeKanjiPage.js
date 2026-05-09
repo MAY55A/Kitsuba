@@ -1,4 +1,3 @@
-import {playAudio} from "../utils/audio.js";
 import {fetchLearningStats, updateUserData} from "../api/userApi.js";
 import {fetchKanjiData} from "../api/kanjiApi.js";
 import {displayKanjiData} from "../render/displayKanji.js";
@@ -26,8 +25,7 @@ async function displayButtons(data) {
         } else {
             prevLink = `/learn/grades/${data.grade}/kanji?kanji=${previousUnit.kanji}&id=${id - 1}`;
         }
-        previousBtn.addEventListener("click", async function () {
-            await playAudio("/sounds/next.mp3");
+        previousBtn.addEventListener("click", function () {
             window.location.href = prevLink;
         });
     }
@@ -44,10 +42,7 @@ async function displayButtons(data) {
             nextLink = `/learn/grades/${data.grade}/kanji?kanji=${nextUnit.kanji}&id=${id + 1}`;
         }
     }
-    nextBtn.addEventListener("click", async function () {
-        await Promise.all([
-            playAudio("/sounds/next.mp3"),
-        ]);
+    nextBtn.addEventListener("click", function () {
         window.location.href = nextLink;
     });
 }

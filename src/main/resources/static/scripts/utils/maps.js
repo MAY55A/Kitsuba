@@ -12,6 +12,13 @@ export const MASCOT_MAP = {
     thinking: "/images/mascot/thinking.png"
 };
 
+export const SOUNDS_MAP = {
+    correctAnswer: "/sounds/correct_answer.mp3",
+    wrongAnswer: "/sounds/wrong_answer.mp3",
+    testPass: "/sounds/test_pass.mp3",
+    testFail: "/sounds/test_fail.mp3"
+}
+
 export const LEVELS_MAP = {
     N5: {
         jlpt: "N5",

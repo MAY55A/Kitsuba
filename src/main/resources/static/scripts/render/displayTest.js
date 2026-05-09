@@ -1,6 +1,6 @@
 import {audioIcon, bindAudioSymbols, playAudio} from "../utils/audio.js";
 import {updateUserData} from "../api/userApi.js";
-import {MASCOT_MAP} from "../utils/maps.js";
+import {MASCOT_MAP, SOUNDS_MAP} from "../utils/maps.js";
 
 
 export async function displayTest(test, learningStats, onShowResult, onExit) {
@@ -35,7 +35,6 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
     });
 
     startBtn.addEventListener("click", () => {
-        playAudio("/sounds/start.mp3");
         document.getElementById("start").classList.add("hidden");
         displayCurrentQuestion();
         preventNavigation = true;
@@ -70,7 +69,6 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
                 }
             }
         } else {
-            playAudio("/sounds/next.mp3");
             nextBtn.innerText = "check";
             nextBtn.classList.add("check");
             nextBtn.disabled = true;
@@ -124,14 +122,11 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
                                 selected = div;
                                 nextBtn.disabled = false;
                             }
-                            playAudio("/sounds/pick.wav");
                         }
                     });
                     newSection.appendChild(div);
                 }
-                nextBtn.addEventListener("click", () => {
 
-                });
             } else {
                 newSection.id = "answer";
                 input.value = "";
@@ -143,13 +138,13 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
     }
 
     function showGoodResult(points) {
-        playAudio("/sounds/correct.mp3");
+        playAudio(SOUNDS_MAP.correctAnswer);
         result.innerHTML = `<span class="correct">CORRECT !</span><br>
                 <img src="${MASCOT_MAP.correct}" alt="excited mascot">`;
     }
 
     function showBadResult() {
-        playAudio("/sounds/wrong.mp3");
+        playAudio(SOUNDS_MAP.wrongAnswer);
         result.innerHTML = `<span class="wrong">INCORRECT !</span><br>
                         <img src="${MASCOT_MAP.wrong}" alt="disappointed mascot">`;
     }
@@ -167,7 +162,7 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
         let result = {
             stats: {requiredScore: test.requiredScore, correctAnswers, totalPoints, errors},
             content: '',
-            audio: "/sounds/win.wav"
+            audio: SOUNDS_MAP.testPass
         };
 
         // Assign content and audio to result using test stats, and update learning stats when necessary
@@ -189,7 +184,6 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
     }
 
     function displayExitPopup(bool) {
-        playAudio("/sounds/pop.mp3");
         let exitPopup = document.getElementById("confirmation-modal");
         if (bool)
             exitPopup.classList.remove("hidden");

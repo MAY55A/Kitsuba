@@ -1,6 +1,5 @@
 import {fetchUserData} from "../api/userApi.js";
 import {loadAuthNav} from "../ui/authNav.js";
-import {playAudio} from "../utils/audio.js";
 
 const container = document.getElementsByClassName("main-container")[0];
 const totalKanjiLearned = document.getElementById("total-kanji-learned");
@@ -75,7 +74,6 @@ function goToTest() {
 }
 
 function togglePopupDisplay() {
-    playAudio("/sounds/pop.mp3");
     let popup = document.getElementById("test-params-modal");
     popup.classList.toggle("hidden");
 }

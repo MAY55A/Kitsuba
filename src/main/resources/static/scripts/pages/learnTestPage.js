@@ -2,7 +2,7 @@ import {fetchGradeTest} from "../api/testApi.js";
 import {displayTest} from "../render/displayTest.js";
 import {fetchKanjiCount} from "../api/kanjiApi.js";
 import {fetchLearningStats} from "../api/userApi.js";
-import {MASCOT_MAP} from "../utils/maps.js";
+import {MASCOT_MAP, SOUNDS_MAP} from "../utils/maps.js";
 
 const nbTest = document.getElementById("test").value;
 const grade = document.getElementById("grade").value;
@@ -11,7 +11,7 @@ async function onShowResult(learningStats, result, testResultElem) {
 
     if (result.stats.totalPoints < result.stats.requiredScore) { // Test failed
         testResultElem.classList.add("failed");
-        result.audio = "/sounds/lose.mp3";
+        result.audio = SOUNDS_MAP.testFail;
         result.content = `
                 <div class="result-left">
                     <h2>Sorry! You did not pass!</h2>
