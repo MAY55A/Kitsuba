@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff7fb;
+            color: #444;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 24px;
+            font-family: Verdana, sans-serif;
+            overflow: hidden;
+            border: 1px solid #f5d7e5;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #fff0f5, #fff8dc);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 16px;
+            object-fit: contain;
+        }
+
+        .title {
+            font-size: 40px;
+            font-family: 'Brush Script MT', cursive;
+            color: #d96b9b;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #8f6b7b;
+        }
+
+        .content {
+            padding: 40px;
+            line-height: 1.8;
+        }
+
+        .username {
+            color: #d96b9b;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .button-wrapper {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: #f59fc1;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .button:hover {
+            background-color: #ec87b2;
+        }
+
+        .end {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 13px;
+            color: #999;
+            background-color: #fff7fb;
+
+            p {
+                margin: 5px 0;
+            }
+
+            .trademark {
+                margin-bottom: 15px;
+            }
+
+            .app-link {
+                color: #ec87b2;
+                text-decoration: none;
+            }
+
+            .help {
+                margin: 15px 0;
+                font-size: 11px;
+            }
+
+            .email-address {
+                color: #888;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+<main class="container">
+    <div class="header"><img alt="Kitsuba Logo" class="logo" src="/icons/kitsuba.png">
+        <h1 class="title"> Welcome to Kitsuba </h1>
+        <p class="subtitle"> A small space to practice and explore kanji </p></div>
+
+    <div class="content"><p> Hello <span class="username" th:text="${username}"></span>,</p>
+        <p> Thank you for joining <strong>Kitsuba</strong>. </p>
+        <p> Kitsuba is a small independent project created by someone who enjoys learning Japanese and wanted to build a
+            simple and peaceful place to practice kanji. </p>
+        <p> The platform is still growing and improving over time, so some features or information may be limited, but I
+            hope it can still be a fun and useful companion during your learning journey 🌸 </p>
+        <div class="button-wrapper"><a class="button" href="https://kitsuba.app"> Start Exploring </a>
+        </div>
+        <p> Thank you for giving Kitsuba a try. </p>
+        <p class="end"> Happy learning, <br> — Kitsuba Team</p></div>
+    <div class="footer">
+
+        <p class="trademark">
+            © <span th:text="${year}"></span> Kitsuba • Made with care 🦊
+        </p>
+
+        <p>
+            Kitsuba Team<br>
+            A small independent project built with care for learning kanji.
+        </p>
+
+        <p>
+            Visit us:
+            <a class="app-link" href="https://kitsuba.app">
+                https://kitsuba.app
+            </a>
+        </p>
+
+        <p class="help">
+            This is an automated email, please do not reply.<br>
+            If you need help, feel free to reach us at
+            <a class="email-address" href="mailto:support@kitsuba.app">
+                support@kitsuba.app
+            </a>
+        </p>
+
+    </div>
+</main>
+</body>
+</html>

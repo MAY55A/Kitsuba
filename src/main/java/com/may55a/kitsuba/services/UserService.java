@@ -21,16 +21,18 @@ import java.util.Map;
 @Service
 public class UserService {
 
+
+    @Autowired
+    private EmailService emailService;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private CustomOAuth2UserService customOAuth2UserService;
 
-    public User registerUser(String email, String userName, String password) throws IllegalArgumentException {
+    public void registerUser(String email, String userName, String password) throws IllegalArgumentException {
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already in use.");
         }
@@ -46,7 +48,12 @@ public class UserService {
         user.addRole(UserRole.USER);
         user.setLearningStats(new LearningStats());
 
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        emailService.sendWelcomeEmail(
+                user.getEmail(),
+                user.getUsername()
+        );
     }
 
     public User getLoggedInUser() {
