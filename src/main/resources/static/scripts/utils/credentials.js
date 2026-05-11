@@ -25,7 +25,7 @@ export function validateAccountInfo(newUsername, newEmail, oldUsername, oldEmail
         result.errorMessage = "No changes were made.";
         result.isValid = false;
     } else if (newUsername.length < 5) {
-        result.errorMessage = "Username must be at least 5 characters.";
+        result.errorMessage = "Username must have at least 5 characters.";
         result.isValid = false;
     } else if (newUsername.length > 30) {
         result.errorMessage = "Username must not exceed 30 characters.";
@@ -35,21 +35,21 @@ export function validateAccountInfo(newUsername, newEmail, oldUsername, oldEmail
         result.isValid = false;
     }
 
-    return result
+    return result;
 }
 
 export function validatePassword(password, confirmPassword) {
     let result = {isValid: true, errorMessage: ""};
 
     if (password.length < 6) {
-        result.errorMessage = "Password must be at least 6 characters.";
+        result.errorMessage = "Password must have at least 6 characters.";
         result.isValid = false;
     } else if (password !== confirmPassword) {
         result.errorMessage = "Passwords do not match.";
         result.isValid = false;
     }
 
-    return result
+    return result;
 }
 
 

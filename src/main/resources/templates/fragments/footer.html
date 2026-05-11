@@ -35,6 +35,9 @@
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 Kitsuba • Made with care</p>
+        <p>
+            © <span th:text="${T(java.time.Year).now()}"></span>
+            Kitsuba • Made with care 🦊
+        </p>
     </div>
 </footer>

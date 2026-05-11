@@ -34,7 +34,7 @@ export async function getRandom() {
     let result = await fetchRandomKanji();
     if (result) {
         word.innerHTML = result.word;
-        randomWordMeanings = result.meaning.split(";");
+        randomWordMeanings = result.meaning.split(/[,;]\s*/);
         meaning.innerText = randomWordMeanings[index];
         pronunciation.innerHTML = `${result.furigana}<br>${result.romaji}`;
     }

@@ -216,7 +216,6 @@ fetchUserData().then((user) => {
 
     avatarRadios.forEach(radio => {
         if (currentImage.src.endsWith(radio.value)) {
-            console.log("current image: ", radio.value);
             radio.checked = true;
         }
         radio.addEventListener('change', () => {
