@@ -23,30 +23,6 @@ main {
     backdrop-filter: blur(8px);
 }
 
-@media (max-width: 600px) {
-    main {
-        margin-top: 8.5em;
-    }
-
-    .navbar {
-        height: 8.5em;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 400px) {
-    main {
-        margin-top: 10.5em;
-    }
-
-    .navbar {
-        height: 10.5em;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
-
 /* Logo */
 .logo img {
     height: 4em;
@@ -147,7 +123,7 @@ main {
     margin: 1em;
     position: fixed;
     background: linear-gradient(120deg, var(--whitesh-pink), var(--very-light-pink));
-    width: 7em;
+    width: 6em;
     border-radius: 1em;
     box-shadow: 5px 5px 10px 5px hsla(217, 19%, 35%, 0.1);
 
@@ -266,4 +242,41 @@ main {
     font-size: 0.8rem;
     color: var(--grey);
     border-top: 1px solid #eee;
+}
+
+
+@media (max-width: 600px) {
+    main {
+        margin-top: 8.5em;
+    }
+
+    .navbar {
+        height: 8.5em;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 400px) {
+    main {
+        margin-top: 10.5em;
+    }
+
+    .navbar {
+        height: 10.5em;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar {
+        width: 4em;
+
+        a img {
+            max-width: 2em;
+        }
+
+        span {
+            display: none;
+        }
+    }
 }

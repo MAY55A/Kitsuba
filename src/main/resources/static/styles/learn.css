@@ -54,11 +54,11 @@ h1 {
             border: var(--solid-pink-border);
             text-align: center;
             border-radius: 15px;
-            padding: 0.5em;
+            padding: 1em 2em;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
 
             span.status {
-                letter-spacing: 6px;
+                letter-spacing: 0.5em;
                 font-size: 0.5em;
                 font-weight: bold;
                 margin-bottom: 50px;
@@ -71,6 +71,10 @@ h1 {
                 span.status {
                     color: var(--green);
                 }
+            }
+
+            .progress {
+                height: 0.75em;
             }
         }
 
@@ -116,7 +120,7 @@ h1 {
     display: none;
 }
 
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 650px) {
     .grades-wrapper {
         margin: 5em;
     }
@@ -142,6 +146,7 @@ h1 {
                 position: absolute;
                 width: 10em;
                 height: 6em;
+                padding: 0.5em;
                 animation: rotateCCW calc(var(--rotate-speed) * 1s) var(--easing) infinite;
             }
         }

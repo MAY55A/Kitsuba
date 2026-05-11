@@ -84,7 +84,7 @@ section {
     .grade {
         position: relative;
         width: 35%;
-        min-width: 15em;
+        min-width: 170px;
         display: flex;
         flex-direction: column;
         justify-content: center;
