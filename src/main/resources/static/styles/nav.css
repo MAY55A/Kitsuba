@@ -79,26 +79,29 @@ main {
 /* Buttons */
 .signup, .login {
     padding: 6px 14px;
-    border-radius: 15px;
+    border-radius: 10px;
     font-size: 0.75em;
     transition: 0.2s;
 }
 
-.signup {
+.login {
     background: var(--pink);
     color: white;
 
     &:hover {
         background: var(--saturated-pink);
+        transform: scale(1.1);
     }
 }
 
 /* Secondary */
-.login {
+.signup {
     color: var(--grey);
+    border: 1px solid var(--grey);
 
     &:hover {
         color: var(--normal-font-color);
+        transform: scale(1.1);
     }
 }
 

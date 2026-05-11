@@ -27,10 +27,6 @@ main {
 
         #profile-picture {
             width: clamp(100px, 20vw, 200px);
-            border-radius: 75px;
-            border: 2px solid var(--saturated-yellow);
-            box-shadow: 5px 5px 10px 5px hsla(217, 19%, 35%, 0.1);
-
         }
 
         #username {
@@ -55,6 +51,7 @@ main {
             background-color: var(--light-pink);
             color: var(--saturated-pink);
             justify-self: center;
+            border: var(--dashed-pink-border);
 
             &:hover {
                 background-color: var(--very-light-pink);

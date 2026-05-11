@@ -2,6 +2,7 @@
 
 main {
     height: 100%;
+    min-height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -124,6 +125,10 @@ video {
     border-radius: 10px;
 }
 
+.note {
+    font-weight: bold;
+}
+
 footer {
     width: 100%;
     display: grid;
@@ -210,7 +215,7 @@ footer {
 
 /* Test Result */
 #test-result {
-    --color: var(--grey);
+    --color: #ffc09e;
     width: clamp(200px, 70%, 800px);
     min-height: 40%;
     display: flex;

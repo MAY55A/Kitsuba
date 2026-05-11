@@ -8,6 +8,7 @@ main {
     padding: 2em;
     gap: 3em;
 }
+
 header {
     width: 60%;
     background-color: var(--light-pink);
@@ -17,10 +18,9 @@ header {
     align-items: center;
     border-radius: 15px;
     padding: 20px 30px;
-    border: var(--dashed-pink-border);
 
     .progress {
-        width:clamp(8em, 40%, 15em);
+        width: clamp(8em, 40%, 15em);
     }
 }
 
@@ -29,6 +29,7 @@ h1 {
     text-align: center;
     margin-bottom: 1em;
 }
+
 h2 {
     color: var(--grey);
     font-size: 1em;

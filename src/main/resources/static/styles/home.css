@@ -3,7 +3,7 @@
 
 /* HERO */
 .hero {
-    background: linear-gradient(135deg, #fff0f5, #fff8dc);
+    background: var(--peach-gradient);
     padding: 2em 5em 5em;
 }
 
@@ -61,20 +61,11 @@
 }
 
 .fade-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease forwards;
+    animation: fadeInUp 0.8s ease forwards;
 }
 
 .fade-up.delay {
     animation-delay: 0.3s;
-}
-
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 
@@ -186,11 +177,12 @@
     inset: 0;
     width: 100%;
     height: 100%;
+    border: none !important;
 }
 
 .border rect {
     fill: none;
-    stroke: #ffb6c1;
+    stroke: var(--pink);
     stroke-width: 2;
     stroke-dasharray: 8 6;
     animation: dash 2s linear infinite;
