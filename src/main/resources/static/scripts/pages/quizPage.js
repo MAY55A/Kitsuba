@@ -1,5 +1,6 @@
 import {fetchSkillQuiz} from "../api/testApi.js";
 import {displayTest} from "../render/displayTest.js";
+import {fetchLearningStats} from "../api/userApi.js";
 import {LEVELS_MAP} from "../utils/maps.js";
 
 const questionsCount = Number(document.getElementById("questions-count").value);
@@ -41,6 +42,7 @@ function onExit() {
     window.location.href = "/quiz";
 }
 
-fetchSkillQuiz(questionsCount).then((testData) => {
-    displayTest(testData, onShowResult, onExit);
+fetchSkillQuiz(questionsCount).then(async (testData) => {
+    const learningStats = await fetchLearningStats();
+    displayTest(testData, learningStats, onShowResult, onExit);
 });
