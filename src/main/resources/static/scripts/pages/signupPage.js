@@ -1,6 +1,6 @@
 import {validateAccountInfo, validatePassword} from "../utils/credentials.js";
 
-document.getElementById("signup").addEventListener("submit", async function (event) {
+document.getElementById("signup-form").addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const email = document.getElementById("email").value;
