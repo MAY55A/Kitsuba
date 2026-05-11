@@ -18,7 +18,7 @@ export async function displayKanjiData(data, isFavourite) {
     document.getElementById('examples').innerHTML = examples;
     document.getElementById('meaning').innerText = data.meaning;
     document.getElementById('readings').innerHTML = `Onyomi : ${data.onyomi.katakana} (${data.onyomi.romaji})<br>Kunyomi : ${data.kunyomi.hiragana} (${data.kunyomi.romaji})`;
-    document.getElementById('mn-hint').innerText = data.mnHint;
+    //document.getElementById('mn-hint').innerHTML = data.mnHint;
     document.getElementById('radicals').innerHTML = `${data.radicalDetails.character} (${data.radicalDetails.hiragana}) : ${data.radicalDetails.meaning}<br> strokes : ${data.radicalDetails.strokes}<br><img src="${data.radicalDetails.image}" alt="radical image" width="50" height="50">`;
     document.getElementById('kanji-video').querySelector('source').src = data.videoUrl;
     document.getElementById('kanji-video').load();
