@@ -76,10 +76,12 @@ public class QuizService {
         int maxScore = 0;
         int kanjiListSize = kanjiList.size();
         int questionTypes = QuestionType.values().length;
-        List<Question> questions = new ArrayList<Question>();
 
-        // add a 'fill in the blank question' every 7 questions
-        for (int i = 0; i < nbQuestions && i < kanjiListSize; i += 7) {
+        // Generate a 'fill in the blank question' every 5 questions
+        int nbFIBQ = nbQuestions / 5;
+        // Use HashSet to avoid adding the same FIBQ
+        Set<FillInBlankQuestion> FIBQSet = new HashSet<>();
+        while (FIBQSet.size() < nbFIBQ) {
             String kanjiStr = kanjiList.get(random.nextInt(kanjiListSize));
             // if not already cached, fetch kanji details
             KanjiDetails randomKanji = kanjiCache.computeIfAbsent(
@@ -87,18 +89,16 @@ public class QuizService {
                     kanjiService::getKanjiDetails
             );
             FillInBlankQuestion generatedFIBQ = generateFillInBlankQuestion(randomKanji);
-            if (generatedFIBQ != null) {
-                questions.add(generatedFIBQ);
+            // if the generated FIBQ was already added ignore it and don't count its points
+            if (generatedFIBQ != null && FIBQSet.add(generatedFIBQ))
                 maxScore += generatedFIBQ.getPoints();
-            }
         }
-        // add 'multiple choice questions' for the rest of the questions
-        // use HashSet to avoid adding the same question
-        Set<MultipleChoiceQuestion> questionSet = new HashSet<>();
-        ;
-        int questionsLeft = nbQuestions - questions.size();
 
-        while (questionSet.size() < questionsLeft) {
+        // Generate 'multiple choice questions' for the rest of the questions
+        int questionsLeft = nbQuestions - nbFIBQ;
+        // Use HashSet to avoid adding the same MCQ
+        Set<MultipleChoiceQuestion> MCQSet = new HashSet<>();
+        while (MCQSet.size() < questionsLeft) {
             QuestionType type = QuestionType.values()[random.nextInt(questionTypes)];
 
             List<String> randomKanjis = getRandomList(kanjiList, 4);
@@ -111,12 +111,15 @@ public class QuizService {
                     .toList();
 
             MultipleChoiceQuestion generatedMCQ = generateMultipleChoiceQuestion(randomKanjisWithDetails, type);
-
             // if the generated MCQ was already added ignore it and don't count its points
-            if (generatedMCQ != null && questionSet.add(generatedMCQ))
+            if (generatedMCQ != null && MCQSet.add(generatedMCQ))
                 maxScore += generatedMCQ.getPoints();
         }
-        questions.addAll(questionSet);
+
+        // Add the two sets of questions to one list
+        List<Question> questions = new ArrayList<>(FIBQSet);
+        questions.addAll(MCQSet);
+        // Shuffle to randomize order of questions
         Collections.shuffle(questions);
         test.setQuestions(questions);
         int minScore = maxScore * passingPercentage / 100;
@@ -152,9 +155,15 @@ public class QuizService {
             return new MultipleChoiceQuestion(type, "What is the meaning of the kanji ?", kanji.getKanji(), kanji.getMeaning(), options, kanji.getAudioPath());
         else if (type == QuestionType.SHOW_MEANING)
             return new MultipleChoiceQuestion(type, "What is the kanji for this word ?", kanji.getMeaning(), kanji.getKanji(), options, null);
-        else if (type == QuestionType.SHOW_READING)
-            return new MultipleChoiceQuestion(type, "What is the kanji for this reading ?", kanji.getKunyomi().get("romaji").isEmpty() ? kanji.getOnyomi().get("katakana") : kanji.getKunyomi().get("hiragana"), kanji.getKanji(), options, null);
-        else
+        else if (type == QuestionType.SHOW_READING) {
+            String reading = kanji.getKunyomi().get("romaji").isEmpty() ? kanji.getOnyomi().get("katakana") : kanji.getKunyomi().get("hiragana");
+            reading = String.join("、",
+                    Arrays.stream(reading.split("、"))
+                            .map(String::trim)
+                            .limit(3)
+                            .toArray(String[]::new));
+            return new MultipleChoiceQuestion(type, "What is the kanji for this reading ?", reading, kanji.getKanji(), options, null);
+        } else
             return new MultipleChoiceQuestion(type, "What is the kanji with this sound ?", null, kanji.getKanji(), options, kanji.getAudioPath());
     }
 
