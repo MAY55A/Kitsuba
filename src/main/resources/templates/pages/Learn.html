@@ -9,9 +9,9 @@
     <title>KITSUBA | Learn</title>
 </head>
 <body>
-<header th:replace="fragments/navbar :: navbar(${currentPath})"></header>
+<header th:replace="~{fragments/navbar :: navbar(${currentPath})}"></header>
 <main>
-    <nav th:replace="fragments/sidebar :: sidebar(${currentPath})"></nav>
+    <nav th:replace="~{fragments/sidebar :: sidebar(${currentPath})}"></nav>
     <section>
         <h1>Continue your learning path and unlock all the grades</h1>
         <div class="grades-wrapper">
@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="progress-info">
-            <div th:replace="fragments/stats"></div>
+            <div th:replace="~{fragments/stats}"></div>
             <div>
                 <h2>Achievements</h2>
                 <div id="achievements"></div>

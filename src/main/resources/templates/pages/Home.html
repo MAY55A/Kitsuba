@@ -9,7 +9,7 @@
     <title>KITSUBA | Home</title>
 </head>
 <body>
-<header th:replace="fragments/navbar :: navbar(null)"></header>
+<header th:replace="~{fragments/navbar :: navbar(null)}"></header>
 <main>
     <section class="hero">
         <div class="hero-content">
@@ -70,7 +70,7 @@
     </section>
 
 </main>
-<footer th:replace="fragments/footer"></footer>
+<footer th:replace="~{fragments/footer}"></footer>
 <script th:src="@{/scripts/pages/homePage.js}" type="module"></script>
 </body>
 </html>

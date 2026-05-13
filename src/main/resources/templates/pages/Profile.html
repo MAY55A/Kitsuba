@@ -9,7 +9,7 @@
     <title>KITSUBA | Profile</title>
 </head>
 <body>
-<header th:replace="fragments/navbar :: navbar(null)"></header>
+<header th:replace="~{fragments/navbar :: navbar(null)}"></header>
 <main>
     <div class="user-banner">
         <div id="user-info">
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="progress-info">
-        <div th:replace="fragments/stats"></div>
+        <div th:replace="~{fragments/stats}"></div>
         <div>
             <h2>Achievements</h2>
             <div id="achievements"></div>

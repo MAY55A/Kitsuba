@@ -1,14 +1,14 @@
 <nav class="sidebar" th:fragment="sidebar(currentPath)">
-    <a th:href="@{/learn}" th:classappend="${currentPath == '/learn'} ? 'active'">
-        <span th:replace="fragments/icons/book"></span>
+    <a th:classappend="${currentPath == '/learn'} ? 'active'" th:href="@{/learn}">
+        <span th:replace="~{fragments/icons/book}"></span>
         <span>Learn</span>
     </a>
-    <a th:href="@{/practice}" th:classappend="${currentPath == '/practice'} ? 'active'">
-        <span th:replace="fragments/icons/dumbell"></span>
+    <a th:classappend="${currentPath == '/practice'} ? 'active'" th:href="@{/practice}">
+        <span th:replace="~{fragments/icons/dumbell}"></span>
         <span>Practice</span>
     </a>
-    <a th:href="@{/favourites}" th:classappend="${currentPath == '/favourites'} ? 'active'">
-        <span th:replace="fragments/icons/hearts"></span>
+    <a th:classappend="${currentPath == '/favourites'} ? 'active'" th:href="@{/favourites}">
+        <span th:replace="~{fragments/icons/hearts}"></span>
         <span>Favourites</span>
     </a>
 </nav>

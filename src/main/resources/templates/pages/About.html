@@ -9,7 +9,7 @@
     <title>KITSUBA | About</title>
 </head>
 <body>
-<header th:replace="fragments/navbar :: navbar(null)"></header>
+<header th:replace="~{fragments/navbar :: navbar(null)}"></header>
 <main>
 
     <div class="about-header">
@@ -101,7 +101,7 @@
     </div>
 
 </main>
-<footer th:replace="fragments/footer"></footer>
+<footer th:replace="~{fragments/footer}"></footer>
 <script src="/scripts/pages/publicPage.js" type="module"></script>
 </body>
 </html>

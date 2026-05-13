@@ -25,7 +25,7 @@
     <a class="go-back" th:href="@{'/learn/grades/' + ${grade}}" th:unless="${grade == null}" title="go back">⬅</a>
     <header>
         <h1>
-            <span class="audio-symbol" id="kanji-audio" th:insert="fragments/icons/audio"></span>
+            <span class="audio-symbol" id="kanji-audio" th:insert="~{fragments/icons/audio}"></span>
             <span id="kanji" th:text="${kanji}"></span>
         </h1>
         <input id="grade" th:unless="${grade == null}" th:value="${grade}" type="hidden">

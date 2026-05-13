@@ -9,10 +9,10 @@
     <title>KITSUBA | Practice</title>
 </head>
 <body>
-<header th:replace="fragments/navbar :: navbar(null)"></header>
+<header th:replace="~{fragments/navbar :: navbar(null)}"></header>
 <script th:src="@{/scripts/pages/practicePage.js}" type="module"></script>
 <main>
-    <nav th:replace="fragments/sidebar :: sidebar(${currentPath})"></nav>
+    <nav th:replace="~{fragments/sidebar :: sidebar(${currentPath})}"></nav>
     <section>
         <h1>Practice</h1>
         <h2 class="subtitle">You can practice here what you've learned before.</h2>
@@ -37,27 +37,27 @@
                 <h2>Practice by grade :</h2>
                 <div class="grades">
                     <div class="grade" data-grade="1">
-                        <span th:replace="/fragments/icons/lock"></span>
+                        <span th:replace="~{fragments/icons/lock}"></span>
                         <h3>Grade 1</h3>
                     </div>
                     <div class="grade" data-grade="2">
-                        <span th:replace="/fragments/icons/lock"></span>
+                        <span th:replace="~{fragments/icons/lock}"></span>
                         <h3>Grade 2</h3>
                     </div>
                     <div class="grade" data-grade="3">
-                        <span th:replace="/fragments/icons/lock"></span>
+                        <span th:replace="~{fragments/icons/lock}"></span>
                         <h3>Grade 3</h3>
                     </div>
                     <div class="grade" data-grade="4">
-                        <span th:replace="/fragments/icons/lock"></span>
+                        <span th:replace="~{fragments/icons/lock}"></span>
                         <h3>Grade 4</h3>
                     </div>
                     <div class="grade" data-grade="5">
-                        <span th:replace="/fragments/icons/lock"></span>
+                        <span th:replace="~{fragments/icons/lock}"></span>
                         <h3>Grade 5</h3>
                     </div>
                     <div class="grade" data-grade="6">
-                        <span th:replace="/fragments/icons/lock"></span>
+                        <span th:replace="~{fragments/icons/lock}"></span>
                         <h3>Grade 6</h3>
                     </div>
                 </div>

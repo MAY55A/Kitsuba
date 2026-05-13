@@ -9,10 +9,10 @@
     <title>KITSUBA | My Favourites</title>
 </head>
 <body>
-<header th:replace="fragments/navbar :: navbar(null)"></header>
+<header th:replace="~{fragments/navbar :: navbar(null)}"></header>
 <script th:src="@{/scripts/pages/favouritesPage.js}" type="module"></script>
 <main>
-    <nav th:replace="fragments/sidebar :: sidebar(${currentPath})"></nav>
+    <nav th:replace="~{fragments/sidebar :: sidebar(${currentPath})}"></nav>
     <section>
         <h1>Favourites</h1>
         <h2 class="subtitle">Click the <span>&hearts;</span> icon on a kanji to save it here for later.</h2>
