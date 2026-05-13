@@ -35,7 +35,7 @@ public class User implements Serializable {
     private String password;
 
     @Column
-    private String profilePicture = "http://localhost:8080/images/avatars/default_avatar.png";
+    private String profilePicture = "/images/avatars/default_avatar.png";
 
     @Column
     private String description;
