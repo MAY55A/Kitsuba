@@ -12,7 +12,8 @@ export async function playAudio(src) {
     currentAudio = new Audio(src);
 
     // Increase volume for cached kanji audio (they initially have low volume)
-    if (src.startsWith("http://localhost:8080/cache/audio_cache/")) {
+    if (src.includes("/audio-cache/")) {
+        currentAudio.crossOrigin = "anonymous";
         const ctx = new AudioContext();
         const source = ctx.createMediaElementSource(currentAudio);
         const gainNode = ctx.createGain();

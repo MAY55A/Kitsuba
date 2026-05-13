@@ -7,20 +7,13 @@ import com.may55a.kitsuba.models.KanjiDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Service
 public class KanjiService {
@@ -33,10 +26,28 @@ public class KanjiService {
     @Value("${rapidapi.host}")
     private String rapidApiHost;
 
+    @Value("${GOOGLE_TTS_API_KEY}")
+    private String googleTtsApiKey;
+
+    @Value("${SUPABASE_URL}")
+    private String supabaseUrl;
+
+    @Value("${SUPABASE_SERVICE_KEY}")
+    private String supabaseKey;
+
     @Autowired
     public KanjiService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.build();
         this.objectMapper = new ObjectMapper();
+    }
+
+    public static String safeFileName(String kanji) {
+        byte[] bytes = kanji.getBytes(StandardCharsets.UTF_8);
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString() + ".mp3";
     }
 
     @Cacheable(value = "dailyWordCache", key = "T(java.time.LocalDate).now()")
@@ -230,39 +241,84 @@ public class KanjiService {
         return "{\"kanji\": \"" + previous + "\", \"isTest\": " + test + " }";
     }
 
-    private String getAudioForKanji(String kanji) {
-        String TTS_URL = "https://translate.google.com/translate_tts?ie=UTF-8&q=%s&tl=ja&client=tw-ob";
-        String AUDIO_CACHE_DIR_ABS_PATH = "src/main/resources/static/cache/audio_cache/";
-        String AUDIO_CACHE_DIR = "cache/audio_cache/";
-// Check if audio is cached
-        String cachedFile_ABS = AUDIO_CACHE_DIR_ABS_PATH + kanji + ".mp3";
-        String cachedFile = AUDIO_CACHE_DIR + kanji + ".mp3";
+    private byte[] generateJapaneseTTS(String text) {
         try {
-            if (Files.exists(Paths.get(cachedFile_ABS))) {
-                return cachedFile;
+            String json = """
+                    {
+                      "input": {
+                        "text": "%s"
+                      },
+                      "voice": {
+                        "languageCode": "ja-JP",
+                        "name": "ja-JP-Neural2-B"
+                      },
+                      "audioConfig": {
+                        "audioEncoding": "MP3",
+                        "volumeGainDb": 5.0,
+                        "speakingRate": 0.8,
+                        "pitch": 2.0
+                      }
+                    }
+                    """.formatted(text);
+            String response = webClient.post()
+                    .uri("https://texttospeech.googleapis.com/v1/text:synthesize?key=" + googleTtsApiKey)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(json)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            JsonNode jsonNode = objectMapper.readTree(response);
+
+            String audioContent = jsonNode.get("audioContent").asText();
+
+            return Base64.getDecoder().decode(audioContent);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String getAudioForKanji(String kanji) {
+        String encodedFileName = safeFileName(kanji);
+        String publicUrl = supabaseUrl + "/storage/v1/object/public/audio-cache/kanji/" + encodedFileName;
+        String uploadUri = supabaseUrl + "/storage/v1/object/audio-cache/kanji/" + encodedFileName;
+
+        try {
+
+            // Check if audio already exists
+            try {
+                webClient.get()
+                        .uri(publicUrl)
+                        .retrieve()
+                        .bodyToMono(byte[].class)
+                        .block();
+
+                return publicUrl;
+
+            } catch (Exception ignored) {
             }
 
-            // Fetch from TTS
-            String url = String.format(TTS_URL, kanji);
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class);
+            // Generate audio
+            byte[] audioData = generateJapaneseTTS(kanji);
 
-            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-                byte[] audioData = response.getBody();
-
-                // Cache audio
-                File cacheDir = new File(AUDIO_CACHE_DIR_ABS_PATH);
-                if (!cacheDir.exists()) cacheDir.mkdirs();
-
-                try (FileOutputStream fos = new FileOutputStream(cachedFile_ABS)) {
-                    fos.write(audioData);
-                }
-
-                return cachedFile;
-            } else {
-                // Return null if response is not successful
+            if (audioData == null) {
                 return null;
             }
+
+            // Upload to Supabase Storage
+            webClient.put()
+                    .uri(uploadUri)
+                    .header("Authorization", "Bearer " + supabaseKey)
+                    .contentType(MediaType.valueOf("audio/mpeg"))
+                    .bodyValue(audioData)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            return publicUrl;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;

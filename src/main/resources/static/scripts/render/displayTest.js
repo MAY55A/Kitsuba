@@ -95,9 +95,9 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
             text.innerText = question.text;
             result.innerHTML = "";
             if (question.type === "SHOW_AUDIO")
-                word.innerHTML = audioIcon(`http://localhost:8080/${question.audio}`)
+                word.innerHTML = audioIcon(question.audio)
             else if (question.type === "SHOW_KANJI" && question.audio !== null)
-                word.innerHTML = audioIcon(`http://localhost:8080/${question.audio}`) + question.word;
+                word.innerHTML = audioIcon(question.audio) + question.word;
             else
                 word.innerHTML = question.word;
 

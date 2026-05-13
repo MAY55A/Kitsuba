@@ -14,7 +14,7 @@ export async function displayKanjiData(data, isFavourite) {
     for (let ex of data.examples.slice(0, 3)) {
         examples += "<div>" + audioIcon(ex.audio) + `${ex.japanese}<br>${ex.meaning}</div>`;
     }
-    document.getElementById('kanji-audio').dataset.audio = "http://localhost:8080/" + data.audioPath;
+    document.getElementById('kanji-audio').dataset.audio = data.audioPath;
     document.getElementById('examples').innerHTML = examples;
     document.getElementById('meaning').innerText = data.meaning;
     document.getElementById('readings').innerHTML = `Onyomi : ${data.onyomi.katakana} (${data.onyomi.romaji})<br>Kunyomi : ${data.kunyomi.hiragana} (${data.kunyomi.romaji})`;
