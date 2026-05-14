@@ -10,6 +10,8 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
     const text = document.getElementById('text');
     const word = document.getElementById('word');
     const result = document.getElementById('question-result');
+    const resultMessage = document.getElementById('question-result-message');
+    const resultImage = document.getElementById('question-result-image');
     const nextBtn = document.getElementById('next');
     const input = document.createElement("input");
 
@@ -93,7 +95,7 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
             const newSection = document.createElement("section");
 
             text.innerText = question.text;
-            result.innerHTML = "";
+            result.classList.add("hidden");
             if (question.type === "SHOW_AUDIO")
                 word.innerHTML = audioIcon(question.audio)
             else if (question.type === "SHOW_KANJI" && question.audio !== null)
@@ -139,14 +141,20 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
 
     function showGoodResult(points) {
         playAudio(SOUNDS_MAP.correctAnswer);
-        result.innerHTML = `<span class="correct">CORRECT !</span><br>
-                <img src="${MASCOT_MAP.correct}" alt="excited mascot">`;
+        result.classList.remove("hidden");
+        resultMessage.innerText = "CORRECT !";
+        resultMessage.classList = "correct";
+        resultImage.src = MASCOT_MAP.correct
+        resultImage.alt = "excited mascot";
     }
 
     function showBadResult() {
         playAudio(SOUNDS_MAP.wrongAnswer);
-        result.innerHTML = `<span class="wrong">INCORRECT !</span><br>
-                        <img src="${MASCOT_MAP.wrong}" alt="disappointed mascot">`;
+        result.classList.remove("hidden");
+        resultMessage.innerText = "INCORRECT !";
+        resultMessage.classList = "wrong";
+        resultImage.src = MASCOT_MAP.wrong
+        resultImage.alt = "disappointed mascot";
     }
 
     async function showTestResult() {
