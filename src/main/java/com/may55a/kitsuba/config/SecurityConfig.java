@@ -32,7 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("https://jisho.org/search/**", "/scripts/**", "/styles/**", "/images/**", "/icons/**", "/oauth2/**").permitAll()
+                        .requestMatchers("/scripts/**", "/styles/**", "/images/**", "/icons/**", "/oauth2/**").permitAll()
                         .requestMatchers("/", "/api/**", "/signup", "/about", "/privacy", "/terms", "/error/**", "/kanji/**").permitAll() // Allow public access
                         .anyRequest().authenticated() // Protect other routes
                 )
