@@ -41,15 +41,21 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
         displayCurrentQuestion();
         preventNavigation = true;
     });
-    input.addEventListener("change", () => {
+    input.addEventListener("input", () => {
         nextBtn.disabled = input.value.length === 0;
+    });
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            nextBtn.click();
+        }
     });
     nextBtn.addEventListener("click", () => {
         if (nextBtn.innerText === "check") {
             nextBtn.innerText = "continue";
             nextBtn.classList.remove("check");
             if (!question.options) {
-                input.disabled = true;
+                input.readOnly = true;
+                input.focus();
                 if (question.correctAnswer.split(", ").includes(input.value.trim().toLowerCase())) {
                     totalPoints += question.points;
                     correctAnswers++;
@@ -126,16 +132,24 @@ export async function displayTest(test, learningStats, onShowResult, onExit) {
                             }
                         }
                     });
+                    div.tabIndex = 0;
+                    div.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter") {
+                            nextBtn.click();
+                        }
+                    });
                     newSection.appendChild(div);
                 }
+                oldSection.replaceWith(newSection);
 
             } else {
                 newSection.id = "answer";
                 input.value = "";
-                input.disabled = false;
+                input.readOnly = false;
                 newSection.appendChild(input);
+                oldSection.replaceWith(newSection);
+                input.focus();
             }
-            oldSection.replaceWith(newSection);
         }
     }
 
