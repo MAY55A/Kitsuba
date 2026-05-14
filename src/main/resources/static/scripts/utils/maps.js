@@ -13,11 +13,11 @@ export const MASCOT_MAP = {
 };
 
 export const SOUNDS_MAP = {
-    correctAnswer: "/sounds/correct_answer.mp3",
-    wrongAnswer: "/sounds/wrong_answer.mp3",
-    testPass: "/sounds/test_pass.mp3",
-    testFail: "/sounds/test_fail.mp3"
-}
+    correctAnswer: new Audio("/sounds/correct_answer.mp3"),
+    wrongAnswer: new Audio("/sounds/wrong_answer.mp3"),
+    testPass: new Audio("/sounds/test_pass.mp3"),
+    testFail: new Audio("/sounds/test_fail.mp3")
+};
 
 export const LEVELS_MAP = {
     N5: {

@@ -1,31 +1,59 @@
+import {SOUNDS_MAP} from "./maps.js";
+
 let currentAudio = null;
 
-// Plays the audio of the given source, and stops any already playing audio.
-export async function playAudio(src) {
-    if (!src) return null;
+const audioContext = new AudioContext();
+const gainNode = audioContext.createGain();
+
+gainNode.gain.value = 4;
+gainNode.connect(audioContext.destination);
+
+export async function playAudio(srcOrAudio) {
+    if (!srcOrAudio) return;
 
     if (currentAudio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
     }
 
-    currentAudio = new Audio(src);
-
-    // Increase volume for cached kanji audio (they initially have low volume)
-    if (src.includes("/audio-cache/")) {
-        currentAudio.crossOrigin = "anonymous";
-        const ctx = new AudioContext();
-        const source = ctx.createMediaElementSource(currentAudio);
-        const gainNode = ctx.createGain();
-        gainNode.gain.value = 4;
-        source.connect(gainNode).connect(ctx.destination);
+    // Preloaded sound effects
+    if (srcOrAudio instanceof Audio) {
+        currentAudio = srcOrAudio;
+        currentAudio.currentTime = 0;
+        currentAudio.play().catch(console.error);
+        return;
     }
 
-    return new Promise(resolve => {
-        currentAudio.play();
-        currentAudio.addEventListener("ended", resolve, {once: true});
-    });
+    // Kanji audio from Supabase
+    currentAudio = new Audio();
+    currentAudio.src = srcOrAudio;
+
+    if (srcOrAudio.includes("/audio-cache/")) {
+        // Prevent blocking by CORS policy
+        currentAudio.crossOrigin = "anonymous";
+        // Required on some browsers after user interaction
+        if (audioContext.state === "suspended") {
+            await audioContext.resume();
+        }
+
+        const source = audioContext.createMediaElementSource(currentAudio);
+        source.connect(gainNode);
+    }
+
+    currentAudio.play().catch(console.error);
 }
+
+// Preload all sounds immediately
+Object.values(SOUNDS_MAP).forEach(audio => {
+    audio.preload = "auto";
+});
+
+// load audio on first click
+document.addEventListener("click", () => {
+    Object.values(SOUNDS_MAP).forEach(audio => {
+        audio.load();
+    });
+}, {once: true});
 
 // Adds Click event listeners to all audio symbols in the current DOM,
 // and binds them with the playAudio function assuming they all have "data-audio" attribute.
