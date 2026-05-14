@@ -23,14 +23,14 @@
             <h1>Login to Your Account</h1>
             <form method="post" th:action="@{/login}">
                 <div class="fields">
-                    <label for="username">User Name :</label>
-                    <input id="username" name="username" placeholder="enter username..." required type="email">
+                    <label for="email">Email :</label>
+                    <input id="email" name="username" placeholder="enter email..." required type="email">
                     <label for="password">Password :</label>
                     <input id="password" name="password" placeholder="enter password..." required type="password">
                 </div>
 
                 <div id="message" th:if="${param.error}">
-                    Invalid username or password.
+                    Invalid email or password.
                 </div>
 
                 <button type="submit">Connect</button>
