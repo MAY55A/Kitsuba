@@ -33,7 +33,7 @@ public class EmailService {
             context.setVariable("year", LocalDate.now().getYear());
 
             String html = templateEngine.process(
-                    "emails/welcome",
+                    "emails/Welcome",
                     context
             );
 

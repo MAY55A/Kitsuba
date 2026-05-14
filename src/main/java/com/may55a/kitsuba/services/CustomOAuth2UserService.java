@@ -17,6 +17,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -51,6 +54,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setAuthProvider(AuthProvider.GOOGLE);
         user.addRole(UserRole.USER);
         user.setLearningStats(new LearningStats());
-        return userRepository.save(user);
+        user = userRepository.save(user);
+
+        emailService.sendWelcomeEmail(
+                user.getEmail(),
+                user.getUsername()
+        );
+
+        return user;
     }
 }
